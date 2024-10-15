@@ -25,7 +25,7 @@ public abstract class Sql_Injection extends CheckRequestType
             Matcher urlSqlParamMatcher = urlSqlQueryPattern.matcher(parameter);
             if (urlSqlParamMatcher.find()) return true;
         }
-
+//
         return false;
     }
 }
