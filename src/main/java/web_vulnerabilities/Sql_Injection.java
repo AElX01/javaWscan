@@ -8,16 +8,23 @@ import java.util.regex.*;
 
 public abstract class Sql_Injection extends CheckRequestType
 {
-    private static final String QUERY_PARAM_PATTERN = "\\?(\\w+)=([^&]+)"; // EXTRACTS INPUT VALUES IN URL
+    private static final String QUERY_PARAM_PATTERN = "\\?(\\w+)=([^&]+)"; // CHECKS IF THERE ARE ANY QUERIES ON URL
     private static final String SQL_PARAM_PATTERN = "(?i)(id|user|product|item|page|cat|type)"; // FINDS SPECIFIC SQL QUERY PATTERNS
+    private static final String[] PAYLOADS = {"'", "+OR+1=1--"};
+    private static final Pattern urlQueryPattern = Pattern.compile(QUERY_PARAM_PATTERN);
+    private static final Pattern urlSqlQueryPattern = Pattern.compile(SQL_PARAM_PATTERN);
 
-    public static InterceptedRequest SubertQueryLogic(InterceptedRequest interceptedRequest) {
+    public static InterceptedRequest SubvertQueryLogic(InterceptedRequest interceptedRequest) {
+        String baseUrl = interceptedRequest.url().split("\\?")[0];
+
+        for (String payload: PAYLOADS) {
+            return null;
+        }
+
         return null;
     }
 
     public static boolean isVulnerable(InterceptedRequest interceptedRequest) {
-        final Pattern urlQueryPattern = Pattern.compile(QUERY_PARAM_PATTERN);
-        final Pattern urlSqlQueryPattern = Pattern.compile(SQL_PARAM_PATTERN);
         Matcher urlParamMatcher = urlQueryPattern.matcher(interceptedRequest.url());
 
         while (urlParamMatcher.find()) {
@@ -25,7 +32,8 @@ public abstract class Sql_Injection extends CheckRequestType
             Matcher urlSqlParamMatcher = urlSqlQueryPattern.matcher(parameter);
             if (urlSqlParamMatcher.find()) return true;
         }
-//
+
         return false;
     }
+
 }
