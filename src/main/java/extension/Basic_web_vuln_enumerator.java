@@ -7,7 +7,7 @@ import burp.api.montoya.MontoyaApi;
 
 public class Basic_web_vuln_enumerator implements BurpExtension
 {
-    public final String EXTENSION_NAME = "basic web enumerator";
+    public final String EXTENSION_NAME = "JavaWScan";
 
     @Override
     public void initialize(MontoyaApi api)
