@@ -11,7 +11,7 @@ public abstract class Sql_Injection extends CheckRequestType
     private static final String QUERY_PARAM_PATTERN = "\\?(\\w+)=([^&]+)"; // EXTRACTS INPUT VALUES IN URL
     private static final String SQL_PARAM_PATTERN = "(?i)(id|user|product|item|page|cat|type)"; // FINDS SPECIFIC SQL QUERY PATTERNS
 
-    public static InterceptedRequest SubertAppLogic(InterceptedRequest interceptedRequest) {
+    public static InterceptedRequest SubertQueryLogic(InterceptedRequest interceptedRequest) {
         return null;
     }
 
