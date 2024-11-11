@@ -7,6 +7,7 @@ import web_vulnerabilities_constants.IsVulnerableCodes;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -35,7 +36,7 @@ abstract class IsVulnerable {
                     case SQLi ->
                             (response.statusCode() == 500) ? IsVulnerableCodes.VULNERABLE : IsVulnerableCodes.SAFE; // CHECKS IF HTTP RESPONSE RETRIEVES AN INTERNAL SERVER ERROR
                     case XSS ->
-                            (response.statusCode() == 200) ? IsVulnerableCodes.VULNERABLE : IsVulnerableCodes.SAFE; // CHECKS IF HTTP RESPONSE CONTAINS THE <script>alert(1)</script> PAYLOAD REFLECTED ON THE RESPONSE BODY
+                            (response.body().contains(URLDecoder.decode(PAYLOAD, StandardCharsets.UTF_8))) ? IsVulnerableCodes.VULNERABLE : IsVulnerableCodes.SAFE; // CHECKS IF HTTP RESPONSE CONTAINS THE <script>alert(1)</script> PAYLOAD REFLECTED ON THE RESPONSE BODY
                     case LFI ->
                             (response.body().contains("root:x:0:0:")) ? IsVulnerableCodes.VULNERABLE : IsVulnerableCodes.SAFE; // CHECKS IF HTTP RESPONSE BODY CONTAINS THE CONTENTS OF /etc/passwd FILE
                 };
