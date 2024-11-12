@@ -2,9 +2,9 @@ package RequestsResponsesHandlers;
 
 import burp.api.montoya.proxy.http.InterceptedRequest;
 
-public abstract class CheckRequestType
+public interface CheckRequestType
 {
-    public static boolean isGet(InterceptedRequest interceptedRequest) {
+    static boolean isGet(InterceptedRequest interceptedRequest) {
         return interceptedRequest.method().equalsIgnoreCase("GET");
     }
 }

@@ -17,7 +17,5 @@ public enum StatusCodes {
 
     private final String outputMessage;
     StatusCodes(String outputMessage) { this.outputMessage = outputMessage; }
-    public String toString() {
-        return outputMessage;
-    }
+    public String toString() { return outputMessage; }
 }

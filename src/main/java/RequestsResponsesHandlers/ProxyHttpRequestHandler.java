@@ -7,12 +7,11 @@ import burp.api.montoya.proxy.http.ProxyRequestHandler;
 import burp.api.montoya.proxy.http.ProxyRequestReceivedAction;
 import burp.api.montoya.proxy.http.ProxyRequestToBeSentAction;
 
+import output_messages.OutputMessages;
 import web_vulnerabilities_constants.AvailableVulnerabilities;
-import web_vulnerabilities_constants.StatusCodes;
 
-import static output_messages.OutputMessages.*;
 
-public class ProxyHttpRequestHandler extends CheckRequestType implements ProxyRequestHandler {
+public final class ProxyHttpRequestHandler extends OutputMessages implements ProxyRequestHandler, CheckRequestType {
     private final Logging logging; // SETS A Logging TYPE VARIABLE TO DISPLAY EXTENSION FINDS
 
     // ARRAY USED TO ITERATE OVER ALL AVAILABLE VULNERABILITIES AND GET THEIR LOG MESSAGES TO REDUCE ProxyHttpRequestHandler CLASS SIZE
@@ -30,12 +29,12 @@ public class ProxyHttpRequestHandler extends CheckRequestType implements ProxyRe
     When Burp Suit intercepts a request, it automatically calls handleRequestReceived(). in this case, this will servers as
     the main() method of the extension as it every test is performed from here.
      */
+
     @Override
     public ProxyRequestReceivedAction handleRequestReceived(InterceptedRequest interceptedRequest) {
 
-        if (isGet(interceptedRequest)) {
+        if (CheckRequestType.isGet(interceptedRequest)) {
             for (AvailableVulnerabilities VULN: VULNERABILITIES) {
-                logging.logToOutput(StatusCodes.INFO_LOG + "looking for " + VULN.getVULNERABILITY() + " on " + interceptedRequest.url());
                 output(VULN, interceptedRequest, logging); // GENERATE THE RIGHT STDOUT/STDERR OUTPUT
             }
         }

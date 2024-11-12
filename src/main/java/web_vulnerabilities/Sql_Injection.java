@@ -10,15 +10,15 @@ import static web_vulnerabilities.IsVulnerable.isVulnerable;
 import static web_vulnerabilities.MightBeVulnerable.mightBeVulnerable;
 
 
-public abstract class Sql_Injection
+public interface Sql_Injection
 {
     // CHECK mightBeVulnerable() METHOD
-    public static boolean testSql(InterceptedRequest interceptedRequest) {
+    static boolean testSql(InterceptedRequest interceptedRequest) {
         return mightBeVulnerable(interceptedRequest, Patterns.QUERY_PARAM_PATTERN.getREGEX(), Patterns.SQL_QUERY_PARAM_PATTERN.getREGEX());
     }
 
     // CHECK isVulnerable() METHOD
-    public static IsVulnerableCodes isVulnerableToSQLi(InterceptedRequest interceptedRequest) {
+    static IsVulnerableCodes isVulnerableToSQLi(InterceptedRequest interceptedRequest) {
         return isVulnerable(interceptedRequest, Patterns.SQL_PAYLOAD.getREGEX(), AvailableVulnerabilities.SQLi);
     }
 }

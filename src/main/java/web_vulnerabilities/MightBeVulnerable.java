@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
     meaning that the target webpage might be vulnerable to a certain vulnerability.
 */
 
-abstract class MightBeVulnerable {
-    public static boolean mightBeVulnerable(InterceptedRequest interceptedRequest, String URL_PARAM_PATTERN, String VULN_PARAM_PATTERN) {
+interface MightBeVulnerable {
+    static boolean mightBeVulnerable(InterceptedRequest interceptedRequest, String URL_PARAM_PATTERN, String VULN_PARAM_PATTERN) {
 
         // COMPILE REGEX PATTERNS TO FURTHER MATCH THEM ON THE URL/PATH
         Pattern urlPattern = Pattern.compile(URL_PARAM_PATTERN);

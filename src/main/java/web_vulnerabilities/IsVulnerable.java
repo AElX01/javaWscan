@@ -21,8 +21,8 @@ import java.nio.charset.StandardCharsets;
     the value will correspond to the "IN-DANGER" status of the website.
  */
 
-abstract class IsVulnerable {
-    public static IsVulnerableCodes isVulnerable(InterceptedRequest interceptedRequest, String PAYLOAD, AvailableVulnerabilities VULNTOSCAN) {
+interface IsVulnerable {
+    static IsVulnerableCodes isVulnerable(InterceptedRequest interceptedRequest, String PAYLOAD, AvailableVulnerabilities VULNTOSCAN) {
         PAYLOAD = URLEncoder.encode(PAYLOAD, StandardCharsets.UTF_8); // CREATES A SAFE ENCODED PAYLOAD TO AVOID ANY URL SYNTAX ERRORS
         String newUrl = interceptedRequest.url().replaceFirst("(=)[^&]*", "$1" + PAYLOAD); // REPLACE ORIGINAL QUERY (e.g. ?category=gift) WITH A ' TO SCAPE THE SQL QUERY
         HttpClient client = HttpClient.newHttpClient(); // CREATES AN HTTP CLIENT

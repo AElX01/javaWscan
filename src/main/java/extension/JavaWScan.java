@@ -12,9 +12,12 @@ import RequestsResponsesHandlers.ProxyHttpRequestHandler;
 import burp.api.montoya.BurpExtension;
 import burp.api.montoya.MontoyaApi;
 
-public class JavaWScan implements BurpExtension
+import web_vulnerabilities_constants.StatusCodes;
+
+
+public final class JavaWScan implements BurpExtension
 {
-    private static final String EXTENSION_NAME = "JavaWScan";
+    private static final String EXTENSION_NAME = "JavaWscan";
 
     /*
     When an extension is loaded on Burp Suite, the framework looks for the initialize() method to enable communication
@@ -27,7 +30,7 @@ public class JavaWScan implements BurpExtension
         api.proxy().registerRequestHandler(new ProxyHttpRequestHandler(api)); // REGISTER CLASS WITH PROXY HANDLERS BURP SUITE MUST COMMUNICATE TO
 
         api.logging().logToOutput("[!] legal disclaimer: using this extension to scan/hack a site without EXPLICIT consent is illegal");
-        api.logging().logToOutput("\n[*] starting @ " + java.time.LocalTime.now() + " " + java.time.LocalDate.now() + "\n");
+        api.logging().logToOutput(StatusCodes.INFO_LOG + "started scan");
     }
 
 }

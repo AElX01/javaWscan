@@ -3,31 +3,31 @@ package output_messages;
 import burp.api.montoya.logging.Logging;
 
 import burp.api.montoya.proxy.http.InterceptedRequest;
+import web_vulnerabilities.FileInclusion;
+import web_vulnerabilities.ReflectedXss;
+import web_vulnerabilities.Sql_Injection;
 import web_vulnerabilities_constants.AvailableVulnerabilities;
 import web_vulnerabilities_constants.IsVulnerableCodes;
 import web_vulnerabilities_constants.StatusCodes;
 
-import static web_vulnerabilities.Sql_Injection.*;
-import static web_vulnerabilities.ReflectedXss.*;
-import static web_vulnerabilities.FileInclusion.*;
 
-public abstract class OutputMessages {
+public abstract class OutputMessages implements Sql_Injection, ReflectedXss, FileInclusion {
     private static final String URL_SYNTAX_ERROR = StatusCodes.ERROR_LOG + "url syntax error on the http request";
     private static final String INVALID_REQUEST_ERROR = StatusCodes.ERROR_LOG + "invalid HTTP request";
 
     public static void output(AvailableVulnerabilities VULNERABILITY, InterceptedRequest interceptedRequest, Logging logging) {
         switch (VULNERABILITY) {
             case SQLi:
-                if (testSql(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
-                outputIfIs(VULNERABILITY, logging, isVulnerableToSQLi(interceptedRequest));
+                if (Sql_Injection.testSql(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
+                outputIfIs(VULNERABILITY, logging, Sql_Injection.isVulnerableToSQLi(interceptedRequest));
                 break;
             case XSS:
-                if (testXss(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
-                outputIfIs(VULNERABILITY, logging, isVulnerableToXss(interceptedRequest));
+                if (ReflectedXss.testXss(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
+                outputIfIs(VULNERABILITY, logging, ReflectedXss.isVulnerableToXss(interceptedRequest));
                 break;
             case LFI:
-                if (testLFI(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
-                outputIfIs(VULNERABILITY, logging, isVulnerableToLFI(interceptedRequest));
+                if (FileInclusion.testLFI(interceptedRequest)) outputIfMight(VULNERABILITY, logging);
+                outputIfIs(VULNERABILITY, logging, FileInclusion.isVulnerableToLFI(interceptedRequest));
                 break;
         }
     }
